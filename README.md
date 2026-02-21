@@ -243,14 +243,6 @@ Ordenação/
 
 ---
 
-## 👨‍💻 Autor
-
-**Felipe**  
-Trabalho Prático - Estruturas de Dados e Algoritmos  
-Data: 24 de Outubro de 2025
-
----
-
 ## 📚 Referências
 
 - Cormen et al., "Introduction to Algorithms"
@@ -259,15 +251,4 @@ Data: 24 de Outubro de 2025
 
 ---
 
-## 📌 Observações Importantes
 
-✅ **Conformidade Total** com os requisitos do trabalho  
-✅ **Solução 100% em C** (sem bibliotecas prontas)  
-✅ **4 Algoritmos** implementados conforme especificado  
-✅ **Leitura direta** do CSV original  
-✅ **Saída ordenada** pela coluna Tempo  
-✅ **Análise completa** para responder à questão  
-
----
-
-**Bom trabalho! 🚀**
