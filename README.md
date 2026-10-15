@@ -1,254 +1,477 @@
-# 📊 Trabalho Prático - Análise de Atrasos de Voos
 
-## 📝 Descrição
-Trabalho da disciplina de **Estruturas de Dados e Algoritmos** que implementa e compara diferentes algoritmos de ordenação aplicados a um dataset real de voos de companhias aéreas norte-americanas.
+# Análise de Atrasos de Voos — Algoritmos de Ordenação em C
 
-**Objetivo**: Determinar se o tempo de voo influencia em atrasos.
+![C](https://img.shields.io/badge/Language-C-A8B9CC?logo=c&logoColor=black)
+![GCC](https://img.shields.io/badge/Compiler-GCC-blue)
+![CSV](https://img.shields.io/badge/Data-CSV-green)
+![Status](https://img.shields.io/badge/Type-Academic_Project-orange)
 
----
+Projeto acadêmico desenvolvido em **linguagem C** para implementar, analisar e comparar algoritmos de ordenação aplicados a registros de voos.
 
-## 🎯 Especificações do Trabalho
+O sistema realiza a leitura de arquivos CSV, organiza os registros pelo tempo de voo, calcula estatísticas descritivas relacionadas a atrasos e apresenta métricas de desempenho dos algoritmos implementados.
 
-### Dataset
-- **Fonte**: Registros de voos de companhias aéreas norte-americanas
-- **Instâncias**: 539.383 linhas
-- **Tamanho**: ~18.5 MB (descompactado)
-- **Formato**: CSV
-- **Colunas utilizadas**:
-  - `Length`: Tempo de voo em minutos
-  - `Delay`: Indicador de atraso (0=não, 1=sim)
+O trabalho foi desenvolvido no contexto da disciplina de **Estruturas de Dados e Algoritmos**, explorando conceitos de complexidade computacional, manipulação de dados e análise de desempenho.
 
-### Requisitos
-✅ Leitura do arquivo CSV original (sem pré-processamento)  
-✅ Implementação de 4 algoritmos de ordenação  
-✅ Saída ordenada pela coluna Tempo  
-✅ Solução 100% em C (sem bibliotecas prontas)  
+## Objetivo
 
----
+Investigar a relação entre a duração dos voos e a ocorrência de atrasos, utilizando algoritmos de ordenação e estatísticas descritivas.
 
-## 🚀 Como Usar
+O projeto também busca comparar o comportamento de diferentes algoritmos de ordenação quando aplicados a conjuntos de dados com diferentes quantidades de registros.
 
-### 1️⃣ Compilação
+### Objetivos específicos
 
-**Windows (PowerShell/CMD):**
-```bash
-gcc ordenacao_voos.c -o ordenacao_voos.exe
+- Implementar quatro algoritmos de ordenação em C.
+- Ler registros de voos armazenados em arquivos CSV.
+- Organizar os voos em ordem crescente de duração.
+- Calcular estatísticas sobre atrasos.
+- Comparar tempos médios de voos com e sem atraso.
+- Analisar a frequência de atrasos por faixa de duração.
+- Medir o desempenho dos algoritmos.
+- Exportar os resultados ordenados para CSV.
+
+## Tecnologias utilizadas
+
+| Tecnologia | Finalidade |
+| --- | --- |
+| C | Implementação dos algoritmos |
+| GCC | Compilação do código-fonte |
+| CSV | Entrada e saída de dados |
+| stdio.h | Leitura, escrita e entrada pelo terminal |
+| stdlib.h | Alocação dinâmica e conversões |
+| string.h | Manipulação de strings |
+| time.h | Medição de tempo de CPU e geração de dados |
+
+Os algoritmos de ordenação foram implementados manualmente, sem utilizar funções prontas de ordenação como `qsort()`.
+
+## Dataset
+
+O programa trabalha com informações de voos de companhias aéreas.
+
+O repositório inclui um arquivo `flights.csv` contendo **10.000 registros sintéticos**, no formato produzido pelo gerador de testes.
+
+O código também foi estruturado para trabalhar com datasets maiores, como conjuntos de dados públicos contendo centenas de milhares de voos.
+
+### Estrutura dos dados
+
+O arquivo de entrada utiliza as seguintes colunas:
+
+| Coluna | Descrição |
+| --- | --- |
+| ID | Identificador do registro |
+| Airline | Companhia aérea |
+| Flight | Número do voo |
+| AirportFrom | Aeroporto de origem |
+| AirportTo | Aeroporto de destino |
+| DayOfWeek | Dia da semana |
+| Time | Horário do voo |
+| Length | Duração do voo em minutos |
+| Delay | Indicador de atraso |
+
+### Colunas utilizadas na análise
+
+O programa extrai principalmente:
+
+- **Length:** duração do voo, em minutos.
+- **Delay:** indicador binário de atraso.
+
+A variável `Delay` assume os valores:
+
+- `0`: voo sem atraso.
+- `1`: voo com atraso.
+
+### Dados sintéticos
+
+O arquivo `gerar_dataset.c` permite criar um conjunto de testes com 10.000 registros.
+
+Os dados gerados incluem companhias aéreas, aeroportos, dias da semana, durações e indicadores de atraso.
+
+**Importante:** o gerador estabelece probabilidades de atraso diferentes conforme a duração do voo. Portanto, tendências observadas nesse conjunto sintético refletem parcialmente as regras utilizadas para gerar os dados e não devem ser tratadas como conclusões sobre a aviação real.
+
+## Algoritmos implementados
+
+Foram implementados quatro algoritmos de ordenação:
+
+### 1. Insertion Sort
+
+O Insertion Sort constrói gradualmente uma sequência ordenada, inserindo cada elemento na posição apropriada.
+
+**Características:**
+
+- Implementação simples.
+- Adequado para conjuntos pequenos.
+- Bom desempenho em dados quase ordenados.
+- Complexidade de tempo O(n²) no caso médio e no pior caso.
+- Melhor caso O(n).
+
+### 2. Bubble Sort
+
+O Bubble Sort compara elementos adjacentes e realiza trocas quando necessário.
+
+A implementação inclui uma otimização que encerra o processamento antecipadamente quando não ocorrem trocas em uma passagem.
+
+**Características:**
+
+- Fácil compreensão e implementação.
+- Adequado para demonstrações didáticas.
+- Complexidade O(n²) no caso médio e no pior caso.
+- Melhor caso O(n), com a otimização implementada.
+
+### 3. Selection Sort
+
+O Selection Sort percorre a parte não ordenada do vetor, identifica o menor elemento e o posiciona corretamente.
+
+**Características:**
+
+- Algoritmo simples.
+- Realiza no máximo n-1 trocas de posição.
+- Complexidade O(n²) mesmo no melhor caso.
+- Exige uma quantidade quadrática de comparações.
+
+### 4. Quick Sort
+
+O Quick Sort utiliza a estratégia de divisão e conquista.
+
+O vetor é particionado em relação a um pivô e cada partição é ordenada recursivamente.
+
+Na implementação atual, o pivô é escolhido como o último elemento da partição.
+
+**Características:**
+
+- Complexidade média O(n log n).
+- Complexidade O(n²) no pior caso.
+- Geralmente eficiente para grandes conjuntos.
+- O desempenho depende da distribuição dos valores e da escolha do pivô.
+
+### Comparação de complexidade
+
+| Algoritmo | Melhor caso | Caso médio | Pior caso |
+| --- | --- | --- | --- |
+| Insertion Sort | O(n) | O(n²) | O(n²) |
+| Bubble Sort | O(n) | O(n²) | O(n²) |
+| Selection Sort | O(n²) | O(n²) | O(n²) |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) |
+
+Para conjuntos grandes, os algoritmos quadráticos podem exigir um tempo de execução elevado.
+
+**Observação:** o Quick Sort implementado utiliza o último elemento como pivô e pode apresentar desempenho ruim em determinadas distribuições, especialmente com muitos valores repetidos ou dados já ordenados.
+
+## Funcionamento do programa
+
+O sistema segue as seguintes etapas:
+
+```text
+Arquivo flights.csv
+        |
+        v
+Leitura e identificação das colunas
+        |
+        v
+Carregamento dos registros na memória
+        |
+        v
+Cálculo das estatísticas descritivas
+        |
+        v
+Menu de seleção do algoritmo
+        |
+        v
+Ordenação por duração do voo
+        |
+        v
+Medição do desempenho
+        |
+        v
+Exibição de uma amostra dos dados
+        |
+        v
+Exportação para voos_ordenados.csv
 ```
 
-**Linux/Mac:**
+A ordenação é realizada em ordem crescente pelo campo `Length`.
+
+## Como executar
+
+### Pré-requisitos
+
+- Compilador GCC instalado.
+- Terminal PowerShell, CMD, Bash ou equivalente.
+- Git, caso deseje clonar o repositório.
+
+Não é necessário instalar bibliotecas externas de ordenação.
+
+### 1. Clonar o repositório
+
 ```bash
-gcc ordenacao_voos.c -o ordenacao_voos -O2
+git clone https://github.com/fhenrique77/Ordena-o-voos.git
+cd Ordena-o-voos
 ```
 
-### 2️⃣ Preparação do Dataset
+### 2. Compilar o programa
 
-Opção A - **Dataset Real**:
-1. Baixe o dataset de voos
-2. Renomeie para `flights.csv`
-3. Coloque na pasta `Ordenação`
+**Windows:**
 
-Opção B - **Dataset de Teste**:
 ```bash
-# Compile o gerador
-gcc gerar_dataset.c -o gerar_dataset.exe
-
-# Execute
-.\gerar_dataset.exe
-
-# Será criado flights.csv com 10.000 registros
+gcc -O2 -std=gnu11 ordenacao_voos.c -o ordenacao_voos.exe
 ```
 
-### 3️⃣ Execução
+**Linux/macOS:**
 
 ```bash
+gcc -O2 -std=gnu11 ordenacao_voos.c -o ordenacao_voos
+```
+
+A implementação utiliza `strdup()`, função disponível em ambientes POSIX e em diversas configurações GNU. A portabilidade para compiladores estritamente ISO C pode exigir ajustes.
+
+### 3. Executar
+
+No Windows:
+
+```powershell
 .\ordenacao_voos.exe
 ```
 
-Siga o menu interativo para escolher o algoritmo.
+No Linux/macOS:
 
----
+```bash
+./ordenacao_voos
+```
 
-## 🔧 Algoritmos Implementados
+O programa procura `flights.csv` no diretório de execução.
 
-| Algoritmo      | Complexidade (Médio) | Melhor Para | Recomendado |
-|----------------|---------------------|-------------|-------------|
-| **Insert Sort**   | O(n²) | Pequenos datasets | < 10k registros |
-| **Bubble Sort**   | O(n²) | Fins didáticos | < 5k registros |
-| **Selection Sort**| O(n²) | Mínimo de trocas | < 10k registros |
-| **Quick Sort**    | O(n log n) | Grandes datasets | ⭐ > 10k registros |
+### 4. Selecionar o algoritmo
 
----
+O menu apresenta as opções:
 
-## 📁 Arquivos Gerados
+```text
+SELEÇÃO DO ALGORITMO DE ORDENAÇÃO
 
-### `voos_ordenados.csv`
-Arquivo de saída com formato:
+[1] Insertion Sort
+[2] Bubble Sort
+[3] Selection Sort
+[4] Quick Sort
+
+[0] Sair
+```
+
+Após a seleção, o programa executa o algoritmo, apresenta suas métricas e gera o arquivo de saída.
+
+Para comparar diferentes algoritmos com o mesmo conjunto de dados, execute novamente o programa e escolha outra opção.
+
+## Gerar um novo dataset de teste
+
+O projeto possui um gerador de dados sintéticos em `gerar_dataset.c`.
+
+### Compilar
+
+**Windows:**
+
+```bash
+gcc -O2 gerar_dataset.c -o gerar_dataset.exe
+```
+
+**Linux/macOS:**
+
+```bash
+gcc -O2 gerar_dataset.c -o gerar_dataset
+```
+
+### Executar
+
+No Windows:
+
+```powershell
+.\gerar_dataset.exe
+```
+
+No Linux/macOS:
+
+```bash
+./gerar_dataset
+```
+
+O programa gera um arquivo `flights.csv` com 10.000 registros.
+
+**Atenção:** a execução do gerador sobrescreve o arquivo `flights.csv` existente no diretório atual. Faça uma cópia caso deseje preservar os dados anteriores.
+
+A quantidade de registros pode ser modificada no código:
+
+```c
+#define NUM_REGISTROS 10000
+```
+
+## Análise estatística
+
+Além da ordenação, o projeto implementa funções de análise dos registros.
+
+### Estatísticas gerais
+
+O programa calcula:
+
+- Quantidade total de voos.
+- Quantidade de voos com atraso.
+- Quantidade de voos sem atraso.
+- Percentual de voos atrasados.
+- Menor duração de voo.
+- Maior duração de voo.
+
+### Comparação entre durações médias
+
+O sistema calcula o tempo médio dos voos com atraso e dos voos sem atraso.
+
+Essas estatísticas permitem investigar possíveis associações entre a duração e a frequência de atrasos.
+
+### Análise por faixas
+
+As durações são agrupadas em quatro intervalos:
+
+| Faixa | Duração |
+| --- | --- |
+| 1 | Menos de 100 minutos |
+| 2 | De 100 a menos de 200 minutos |
+| 3 | De 200 a menos de 300 minutos |
+| 4 | 300 minutos ou mais |
+
+Para cada faixa, são calculados:
+
+- Quantidade de voos.
+- Quantidade de voos com atraso.
+- Percentual de atrasos.
+
+### Interpretação dos resultados
+
+A pergunta central do trabalho é:
+
+**"O tempo de voo influencia na ocorrência de atrasos?"**
+
+O programa fornece indicadores descritivos para investigar essa questão.
+
+Diferenças entre médias ou percentuais podem indicar associação entre as variáveis, mas não demonstram, isoladamente, uma relação de causa e efeito.
+
+A implementação atual não calcula um coeficiente de correlação nem controla outras variáveis, como clima, aeroporto, companhia aérea ou período do dia.
+
+Para conclusões sobre voos reais, deve-se utilizar um conjunto de dados observacionais apropriado e realizar análises estatísticas adicionais.
+
+## Medição de desempenho
+
+Durante a execução, o programa registra informações sobre o algoritmo selecionado.
+
+| Métrica | Descrição |
+| --- | --- |
+| Tempo de execução | Tempo de CPU consumido na ordenação |
+| Comparações | Operações contabilizadas pelo algoritmo |
+| Trocas | Movimentações ou trocas contabilizadas |
+| Quantidade de registros | Total de voos processados |
+
+A medição é realizada com `clock()`, da biblioteca `time.h`.
+
+Os contadores foram implementados manualmente. Como a contagem de movimentações varia entre os algoritmos, seus valores devem ser interpretados conforme a implementação, e não como métricas perfeitamente equivalentes.
+
+## Arquivos de saída
+
+Após a ordenação, o sistema gera:
+
+`voos_ordenados.csv`
+
+O arquivo possui o seguinte formato:
+
 ```csv
 Tempo,Atraso
 30,0
-45,1
-60,0
-...
+30,0
+30,1
 ```
 
-**Características**:
-- ✅ Ordenado pela coluna Tempo (crescente)
-- ✅ Contém todos os registros processados
-- ✅ Formato compatível com Excel/Calc
+Os registros são organizados em ordem crescente pela duração.
 
----
+O arquivo exportado contém apenas as colunas `Tempo` e `Atraso`, correspondentes aos campos `Length` e `Delay` da entrada.
 
-## 📊 Análises Fornecidas
+**Observação:** uma nova execução de ordenação pode sobrescrever o arquivo de saída existente.
 
-O programa exibe automaticamente:
+## Estrutura do repositório
 
-1. **📈 Estatísticas Gerais**
-   - Total de voos
-   - Percentual de atrasos
-   - Tempos mínimo e máximo
-
-2. **⏱️ Comparação de Tempos**
-   - Tempo médio de voos COM atraso
-   - Tempo médio de voos SEM atraso
-
-3. **📊 Análise por Faixas**
-   - 0-100 min
-   - 100-200 min
-   - 200-300 min
-   - 300+ min
-
-4. **🔧 Desempenho do Algoritmo**
-   - Tempo de execução
-   - Número de comparações
-   - Número de trocas
-
----
-
-## 💡 Como Responder à Questão
-
-### "O tempo de voo influencia em atrasos?"
-
-Analise os dados fornecidos:
-
-**✅ SIM, se:**
-- Tempo médio COM atraso > Tempo médio SEM atraso
-- Percentual de atraso aumenta nas faixas maiores
-- Correlação positiva entre tempo e atraso
-
-**❌ NÃO, se:**
-- Tempos médios são similares
-- Percentual de atraso uniforme em todas as faixas
-- Sem padrão claro nos dados ordenados
-
-**⚠️ PARCIALMENTE, se:**
-- Diferença pequena entre tempos médios
-- Variação inconsistente entre faixas
-
----
-
-## 🧪 Exemplo de Uso
-
-```
-╔════════════════════════════════════════════════════════════════════╗
-║    TRABALHO PRÁTICO - ESTRUTURAS DE DADOS E ALGORITMOS            ║
-║    Análise de Atrasos de Voos                                     ║
-╚════════════════════════════════════════════════════════════════════╝
-
-📂 Abrindo arquivo 'flights.csv'...
-✓ Colunas identificadas - Length: índice 7, Delay: índice 8
-📖 Lendo dados...
-   → 100000 registros lidos...
-✓ Leitura concluída: 539383 registros carregados
-
-╔════════════════════════════════════════════════════════════════════╗
-║               ESTATÍSTICAS DO DATASET                             ║
-╚════════════════════════════════════════════════════════════════════╝
-
-📊 DADOS GERAIS:
-   Total de voos: 539383
-   Voos com atraso: 216321 (40.12%)
-   Voos sem atraso: 323062 (59.88%)
-
-⏱️  TEMPO DE VOO:
-   Menor tempo: 20 minutos
-   Maior tempo: 695 minutos
-   Tempo médio COM atraso: 135.42 minutos
-   Tempo médio SEM atraso: 128.76 minutos
-
-[... continua ...]
+```text
+Ordena-o-voos/
+├── ordenacao_voos.c      # Programa principal
+├── gerar_dataset.c       # Gerador de dados sintéticos
+├── flights.csv           # Dataset de teste
+├── voos_ordenados.csv    # Resultado de uma execução
+├── ordenação.c           # Arquivo vazio
+├── .gitignore            # Configuração do Git
+└── README.md             # Documentação
 ```
 
+### Arquivos principais
+
+**ordenacao_voos.c**
+
+Contém a implementação dos algoritmos, leitura do CSV, análise estatística, medição de desempenho e exportação.
+
+**gerar_dataset.c**
+
+Permite gerar registros sintéticos para testes.
+
+**flights.csv**
+
+Arquivo de entrada utilizado pelo programa. A versão presente no repositório contém 10.000 registros.
+
+**voos_ordenados.csv**
+
+Exemplo de saída ordenada incluído no repositório.
+
+## Limitações conhecidas
+
+- O carregamento está limitado a 550.000 registros pela constante `MAX_REGISTROS`.
+- A leitura do CSV utiliza separação simples por vírgula, não sendo um parser CSV completo.
+- Campos vazios ou valores com vírgulas entre aspas podem exigir tratamento adicional.
+- A conversão de valores com `atoi()` não oferece validação rigorosa.
+- O programa executa um algoritmo de ordenação por execução.
+- A escolha do último elemento como pivô pode prejudicar o desempenho do Quick Sort em certos casos.
+- A comparação estatística não demonstra causalidade.
+- O dataset sintético possui probabilidades de atraso definidas pelo gerador.
+- Não há suíte de testes automatizados configurada.
+
+## Melhorias futuras
+
+- Implementar Merge Sort e Heap Sort.
+- Adicionar testes automatizados de ordenação.
+- Validar os dados de entrada antes do processamento.
+- Aprimorar a leitura de arquivos CSV.
+- Automatizar a comparação dos quatro algoritmos sobre cópias idênticas do conjunto de dados.
+- Exportar relatórios de desempenho.
+- Implementar correlação e análises estatísticas adicionais.
+- Adicionar gráficos de desempenho.
+- Permitir selecionar arquivos por argumento da linha de comando.
+- Melhorar a escolha do pivô do Quick Sort.
+
+## Conceitos aplicados
+
+O desenvolvimento envolve conhecimentos de:
+
+- Estruturas de dados.
+- Algoritmos de ordenação.
+- Análise de complexidade.
+- Linguagem C.
+- Manipulação de arquivos.
+- Ponteiros e alocação dinâmica.
+- Estatística descritiva.
+- Medição de desempenho computacional.
+- Processamento de dados tabulares.
+
+## Referências
+
+- Cormen, T. H. et al. — Introduction to Algorithms.
+- Documentação da linguagem C.
+- Material acadêmico sobre algoritmos de ordenação.
+- Conceitos de estatística descritiva.
+
+## Autor
+
+**Felipe Henrique Oliveira Sousa**
+
+Estudante de Engenharia de Software na Universidade de Brasília (UnB).
+
+GitHub: [@fhenrique77](https://github.com/fhenrique77)
+
 ---
 
-## ⚙️ Personalização
-
-### Ajustar Limite de Registros
-Arquivo `ordenacao_voos.c`, linha 24:
-```c
-#define MAX_REGISTROS 550000  // Ajuste conforme sua RAM
-```
-
-### Mudar Nomes dos Arquivos
-Linhas 25-26:
-```c
-#define ARQUIVO_ENTRADA "seu_arquivo.csv"
-#define ARQUIVO_SAIDA "saida_personalizada.csv"
-```
-
----
-
-## 🐛 Solução de Problemas
-
-### ❌ "Não foi possível abrir o arquivo"
-- Verifique se `flights.csv` está na pasta `Ordenação`
-- Confirme o nome exato do arquivo
-
-### ❌ "Memória insuficiente"
-- Reduza `MAX_REGISTROS`
-- Feche outros programas
-- Use dataset menor para testes
-
-### ❌ "Colunas não encontradas"
-- Verifique o cabeçalho do CSV
-- Confirme que existem colunas `Length` e `Delay`
-
-### ⏱️ Programa muito lento
-- **Use Quick Sort** (opção 4)
-- Evite Bubble/Insert/Selection para > 50k registros
-- Compile com otimização: `gcc -O2`
-
----
-
-## 📂 Estrutura de Arquivos
-
-```
-Ordenação/
-├── ordenacao_voos.c      # Código principal
-├── gerar_dataset.c       # Gerador de dados de teste
-├── README.md             # Este arquivo
-├── flights.csv           # Dataset (você fornece)
-└── voos_ordenados.csv    # Saída gerada
-```
-
----
-
-## 🎓 Conceitos Abordados
-
-- ✅ Algoritmos de ordenação (4 implementações)
-- ✅ Análise de complexidade
-- ✅ Manipulação de arquivos CSV
-- ✅ Alocação dinâmica de memória
-- ✅ Análise estatística de dados
-- ✅ Medição de desempenho
-
----
-
-## 📚 Referências
-
-- Cormen et al., "Introduction to Algorithms"
-- Dataset: Registros de voos de companhias aéreas
-- Conceitos de Estatística Descritiva
-
----
-
-
+Projeto acadêmico desenvolvido para aplicar conceitos de Estruturas de Dados e Algoritmos, análise de desempenho e processamento de arquivos CSV utilizando linguagem C.
